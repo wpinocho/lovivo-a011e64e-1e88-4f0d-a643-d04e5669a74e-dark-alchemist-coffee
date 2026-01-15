@@ -140,7 +140,7 @@ export const HeroSection = () => {
               
               {/* Product image */}
               <img 
-                src="/hero-product.png" 
+                src="https://ptgmltivisbtvmoxwnhd.supabase.co/storage/v1/object/public/message-images/1f8ba537-8c69-4ea6-8f18-0b6127967c8a/1768497692868-2mbih6q3bua.png" 
                 alt="Premium Adaptogenic Coffee" 
                 className="relative z-10 w-full h-auto drop-shadow-2xl"
               />
