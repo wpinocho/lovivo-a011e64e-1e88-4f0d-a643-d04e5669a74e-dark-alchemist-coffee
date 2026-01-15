@@ -1369,13 +1369,33 @@
     }
     return null;
   }
+  
+  /**
+   * LOCKED parent origin - captured from first valid incoming message
+   * This is the MOST RELIABLE way to know the actual parent window origin
+   * because event.origin in postMessage is guaranteed to be correct
+   */
+  let lockedParentOrigin = null;
+  
+  function captureAndLockParentOrigin(eventOrigin) {
+    // Only lock once, never change it
+    if (!lockedParentOrigin && eventOrigin && eventOrigin !== 'null') {
+      lockedParentOrigin = eventOrigin;
+      console.log('[VISUAL-DEBUG] 🔒 Parent origin LOCKED:', lockedParentOrigin);
+    }
+  }
 
   /**
    * Get target origin for outgoing messages
    * @returns {string} The target origin or '*' as fallback
    */
   function getTargetOrigin() {
-    // Use configured parentOrigin if available
+    // PRIORITY 1: Use locked parent origin (most reliable - from actual messages)
+    if (lockedParentOrigin) {
+      return lockedParentOrigin;
+    }
+    
+    // PRIORITY 2: Use configured parentOrigin if available
     if (state.config.parentOrigin) {
       return state.config.parentOrigin;
     }
@@ -1945,6 +1965,10 @@
       console.warn('[VISUAL-DEBUG] Allowed origins:', state.config.allowedOrigins);
       return;
     }
+    
+    // CAPTURE parent origin from valid incoming messages
+    // This is the MOST RELIABLE way to know where to send responses
+    captureAndLockParentOrigin(event.origin);
 
     try {
       switch (type) {
