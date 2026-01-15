@@ -59,13 +59,13 @@ export const EcommerceTemplate = ({
                 to="/#products" 
                 className="text-foreground/80 hover:text-foreground transition-colors font-medium"
               >
-                Products
+                Productos
               </ScrollLink>
               <ScrollLink 
                 to="/#science" 
                 className="text-foreground/80 hover:text-foreground transition-colors font-medium"
               >
-                Science
+                Ciencia
               </ScrollLink>
               <Link 
                 to="/blog" 
@@ -119,19 +119,19 @@ export const EcommerceTemplate = ({
           <div className="md:col-span-2">
             <BrandLogoLeft />
             <p className="mt-6 text-muted-foreground leading-relaxed max-w-md">
-              Premium adaptogenic coffee for the modern alchemist. Clean energy, enhanced focus, zero jitters.
+              Café adaptógeno premium para el alquimista moderno. Energía limpia, enfoque mejorado, cero nerviosismo.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-foreground font-playfair text-lg">Quick Links</h3>
+            <h3 className="font-semibold mb-4 text-foreground font-playfair text-lg">Enlaces Rápidos</h3>
             <div className="space-y-3">
               <Link 
                 to="/" 
                 className="block text-muted-foreground hover:text-foreground transition-colors"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
@@ -143,14 +143,14 @@ export const EcommerceTemplate = ({
                 to="#" 
                 className="block text-muted-foreground hover:text-foreground transition-colors"
               >
-                About
+                Acerca de
               </Link>
             </div>
           </div>
 
           {/* Social Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-foreground font-playfair text-lg">Follow Us</h3>
+            <h3 className="font-semibold mb-4 text-foreground font-playfair text-lg">Síguenos</h3>
             <SocialLinks />
           </div>
         </div>
@@ -160,8 +160,8 @@ export const EcommerceTemplate = ({
             &copy; 2025 Neural Coffee Co. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-foreground transition-colors">Política de Privacidad</a>
+            <a href="#" className="hover:text-foreground transition-colors">Términos de Servicio</a>
           </div>
         </div>
       </div>

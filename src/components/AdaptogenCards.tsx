@@ -4,25 +4,25 @@ import { useEffect, useRef, useState } from 'react';
 const adaptogens = [
   {
     icon: Brain,
-    name: "Lion's Mane",
-    benefit: "Enhanced Focus",
-    description: "Boost cognitive function and mental clarity with this powerful nootropic mushroom.",
+    name: "Melena de León",
+    benefit: "Enfoque Mejorado",
+    description: "Potencia la función cognitiva y la claridad mental con este poderoso hongo nootrópico.",
     color: "from-primary to-primary/50",
     glow: "glow-primary"
   },
   {
     icon: Heart,
     name: "Ashwagandha",
-    benefit: "Stress Relief",
-    description: "Ancient adaptogen that reduces cortisol and promotes calm, sustained energy.",
+    benefit: "Alivio del Estrés",
+    description: "Adaptógeno ancestral que reduce el cortisol y promueve energía calmada y sostenida.",
     color: "from-secondary to-secondary/50",
     glow: "glow-secondary"
   },
   {
     icon: Shield,
     name: "Chaga",
-    benefit: "Immune Support",
-    description: "Powerful antioxidants that strengthen your immune system and overall wellness.",
+    benefit: "Apoyo Inmune",
+    description: "Poderosos antioxidantes que fortalecen tu sistema inmunológico y bienestar general.",
     color: "from-accent to-accent/50",
     glow: "glow-accent"
   }
@@ -60,11 +60,11 @@ export const AdaptogenCards = () => {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
             <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-              The Science
+              La Ciencia
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Clean energy. No jitters. Just flow.
+            Energía limpia. Sin nerviosismo. Solo flujo.
           </p>
         </div>
 

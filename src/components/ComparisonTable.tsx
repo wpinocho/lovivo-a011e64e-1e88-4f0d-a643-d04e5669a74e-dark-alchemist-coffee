@@ -1,14 +1,14 @@
 import { Check, X } from 'lucide-react';
 
 const comparisons = [
-  { feature: 'Energy Boost', regular: true, adaptogenic: true },
-  { feature: 'No Jitters', regular: false, adaptogenic: true },
-  { feature: 'No Crash', regular: false, adaptogenic: true },
-  { feature: 'Enhanced Focus', regular: false, adaptogenic: true },
-  { feature: 'Stress Relief', regular: false, adaptogenic: true },
-  { feature: 'Immune Support', regular: false, adaptogenic: true },
-  { feature: 'Antioxidants', regular: true, adaptogenic: true },
-  { feature: 'Sustained Performance', regular: false, adaptogenic: true },
+  { feature: 'Impulso de Energía', regular: true, adaptogenic: true },
+  { feature: 'Sin Nerviosismo', regular: false, adaptogenic: true },
+  { feature: 'Sin Caída', regular: false, adaptogenic: true },
+  { feature: 'Enfoque Mejorado', regular: false, adaptogenic: true },
+  { feature: 'Alivio del Estrés', regular: false, adaptogenic: true },
+  { feature: 'Apoyo Inmune', regular: false, adaptogenic: true },
+  { feature: 'Antioxidantes', regular: true, adaptogenic: true },
+  { feature: 'Rendimiento Sostenido', regular: false, adaptogenic: true },
 ];
 
 export const ComparisonTable = () => {
@@ -24,11 +24,11 @@ export const ComparisonTable = () => {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
             <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-              Why Choose Adaptogenic?
+              ¿Por Qué Elegir Adaptógeno?
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Not all coffee is created equal. See the difference.
+            No todos los cafés son iguales. Ve la diferencia.
           </p>
         </div>
 
@@ -37,13 +37,13 @@ export const ComparisonTable = () => {
           <div className="grid grid-cols-3 border-b border-white/10">
             <div className="p-6"></div>
             <div className="p-6 text-center border-x border-white/10">
-              <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Regular</div>
-              <div className="text-xl font-semibold text-muted-foreground">Coffee</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Café</div>
+              <div className="text-xl font-semibold text-muted-foreground">Regular</div>
             </div>
             <div className="p-6 text-center bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden">
               <div className="absolute inset-0 shimmer" />
-              <div className="text-sm text-primary uppercase tracking-wider mb-2 relative z-10">Our</div>
-              <div className="text-xl font-bold text-foreground relative z-10">Adaptogenic Blend</div>
+              <div className="text-sm text-primary uppercase tracking-wider mb-2 relative z-10">Nuestra</div>
+              <div className="text-xl font-bold text-foreground relative z-10">Mezcla Adaptógena</div>
             </div>
           </div>
 
@@ -82,14 +82,14 @@ export const ComparisonTable = () => {
         {/* CTA */}
         <div className="mt-12 text-center">
           <p className="text-muted-foreground mb-4">
-            Experience the difference. Your body will thank you.
+            Experimenta la diferencia. Tu cuerpo te lo agradecerá.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="shimmer glow-primary bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-full font-semibold transition-colors">
-              Shop Now
+              Comprar Ahora
             </button>
             <button className="glass-card border-white/20 hover:border-white/40 px-8 py-4 rounded-full font-semibold transition-colors">
-              Read Research
+              Leer Investigación
             </button>
           </div>
         </div>

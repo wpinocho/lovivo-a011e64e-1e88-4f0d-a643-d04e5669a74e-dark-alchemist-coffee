@@ -41,11 +41,11 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
               <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                Our Blends
+                Nuestras Mezclas
               </span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Premium adaptogenic coffee, crafted for peak performance
+              Café adaptógeno premium, creado para el máximo rendimiento
             </p>
           </div>
           
@@ -64,7 +64,7 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
           ) : (
             <div className="text-center py-12 glass-card">
               <p className="text-muted-foreground">
-                No products available at the moment.
+                No hay productos disponibles en este momento.
               </p>
             </div>
           )}
@@ -81,34 +81,34 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6">
             <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-              Ready to Elevate?
+              ¿Listo para Elevarte?
             </span>
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Join thousands who've upgraded their morning ritual. Neural fuel for the modern alchemist.
+            Únete a miles que han mejorado su ritual matutino. Combustible neural para el alquimista moderno.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="shimmer glow-primary bg-primary text-primary-foreground hover:bg-primary/90 px-12 py-6 rounded-full text-lg font-semibold transition-colors">
-              Shop Collection
+              Ver Colección
             </button>
             <button className="glass-card border-white/20 hover:border-white/40 px-12 py-6 rounded-full text-lg font-semibold transition-colors">
-              Subscribe & Save 20%
+              Suscríbete y Ahorra 20%
             </button>
           </div>
 
           <div className="mt-12 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="glass-card p-6">
               <div className="text-3xl font-bold text-foreground mb-2">10k+</div>
-              <div className="text-sm text-muted-foreground">Happy Customers</div>
+              <div className="text-sm text-muted-foreground">Clientes Felices</div>
             </div>
             <div className="glass-card p-6">
               <div className="text-3xl font-bold text-foreground mb-2">4.9★</div>
-              <div className="text-sm text-muted-foreground">Average Rating</div>
+              <div className="text-sm text-muted-foreground">Calificación Promedio</div>
             </div>
             <div className="glass-card p-6">
               <div className="text-3xl font-bold text-foreground mb-2">100%</div>
-              <div className="text-sm text-muted-foreground">Organic</div>
+              <div className="text-sm text-muted-foreground">Orgánico</div>
             </div>
           </div>
         </div>

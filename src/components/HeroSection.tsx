@@ -67,23 +67,23 @@ export const HeroSection = () => {
           >
             <div className="inline-flex items-center px-4 py-2 rounded-full glass-card text-sm text-muted-foreground border border-white/10">
               <span className="h-2 w-2 rounded-full bg-primary mr-2 animate-pulse" />
-              Premium Adaptogenic Coffee
+              Café Adaptógeno Premium
             </div>
 
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-playfair font-bold leading-tight">
               <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
-                Neural Fuel
+                Combustible
               </span>
               <br />
-              <span className="text-foreground">for the Modern</span>
+              <span className="text-foreground">Neural para el</span>
               <br />
               <span className="bg-gradient-to-r from-accent via-secondary to-primary bg-clip-text text-transparent">
-                Alchemist
+                Alquimista Moderno
               </span>
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-              Clean energy. No jitters. Just flow. Scientifically formulated with adaptogens to enhance focus, reduce stress, and optimize performance.
+              Energía limpia. Sin nerviosismo. Solo flujo. Formulado científicamente con adaptógenos para mejorar el enfoque, reducir el estrés y optimizar el rendimiento.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -91,7 +91,7 @@ export const HeroSection = () => {
                 size="lg" 
                 className="shimmer glow-primary bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full group"
               >
-                Explore Blends
+                Explorar Mezclas
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
@@ -99,24 +99,24 @@ export const HeroSection = () => {
                 variant="outline" 
                 className="glass-card border-white/20 hover:border-white/40 text-lg px-8 py-6 rounded-full"
               >
-                Learn More
+                Saber Más
               </Button>
             </div>
 
             <div className="flex items-center gap-8 pt-4">
               <div>
                 <div className="text-3xl font-bold text-foreground">500mg</div>
-                <div className="text-sm text-muted-foreground">Adaptogens</div>
+                <div className="text-sm text-muted-foreground">Adaptógenos</div>
               </div>
               <div className="h-12 w-px bg-border" />
               <div>
-                <div className="text-3xl font-bold text-foreground">Zero</div>
-                <div className="text-sm text-muted-foreground">Jitters</div>
+                <div className="text-3xl font-bold text-foreground">Cero</div>
+                <div className="text-sm text-muted-foreground">Nerviosismo</div>
               </div>
               <div className="h-12 w-px bg-border" />
               <div>
                 <div className="text-3xl font-bold text-foreground">100%</div>
-                <div className="text-sm text-muted-foreground">Organic</div>
+                <div className="text-sm text-muted-foreground">Orgánico</div>
               </div>
             </div>
           </div>
@@ -153,8 +153,8 @@ export const HeroSection = () => {
                 className="absolute top-1/4 -left-8 glass-card p-4 rounded-2xl glow-primary animate-float z-20"
                 style={{ animationDelay: '0s' }}
               >
-                <div className="text-sm font-semibold text-foreground">Lion's Mane</div>
-                <div className="text-xs text-muted-foreground">Enhanced Focus</div>
+                <div className="text-sm font-semibold text-foreground">Melena de León</div>
+                <div className="text-xs text-muted-foreground">Enfoque Mejorado</div>
               </div>
 
               <div 
@@ -162,7 +162,7 @@ export const HeroSection = () => {
                 style={{ animationDelay: '1s' }}
               >
                 <div className="text-sm font-semibold text-foreground">Ashwagandha</div>
-                <div className="text-xs text-muted-foreground">Stress Relief</div>
+                <div className="text-xs text-muted-foreground">Alivio del Estrés</div>
               </div>
 
               <div 
@@ -170,7 +170,7 @@ export const HeroSection = () => {
                 style={{ animationDelay: '2s' }}
               >
                 <div className="text-sm font-semibold text-foreground">Chaga</div>
-                <div className="text-xs text-muted-foreground">Immune Support</div>
+                <div className="text-xs text-muted-foreground">Apoyo Inmune</div>
               </div>
             </div>
           </div>
@@ -179,7 +179,7 @@ export const HeroSection = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <div className="text-xs text-muted-foreground uppercase tracking-wider">Scroll</div>
+        <div className="text-xs text-muted-foreground uppercase tracking-wider">Desplázate</div>
         <div className="h-8 w-px bg-gradient-to-b from-primary to-transparent" />
       </div>
     </section>

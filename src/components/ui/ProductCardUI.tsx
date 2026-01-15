@@ -66,12 +66,12 @@ export const ProductCardUI = ({ product }: ProductCardUIProps) => {
                   )}
                   {logic.product.featured && (
                     <span className="glass-card text-accent text-xs px-3 py-1.5 rounded-full font-semibold">
-                      Featured
+                      Destacado
                     </span>
                   )}
                   {!logic.inStock && (
                     <span className="glass-card text-muted-foreground text-xs px-3 py-1.5 rounded-full font-semibold">
-                      Sold Out
+                      Agotado
                     </span>
                   )}
                 </div>
@@ -165,7 +165,7 @@ export const ProductCardUI = ({ product }: ProductCardUIProps) => {
                   disabled={!logic.canAddToCart}
                   className="shimmer glow-primary bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 rounded-full px-6"
                 >
-                  {logic.inStock ? 'Add to Cart' : 'Sold Out'}
+                  {logic.inStock ? 'Agregar al Carrito' : 'Agotado'}
                 </Button>
               </div>
             </div>
