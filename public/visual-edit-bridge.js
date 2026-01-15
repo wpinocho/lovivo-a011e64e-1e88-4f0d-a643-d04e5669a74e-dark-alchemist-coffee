@@ -1408,7 +1408,7 @@
     // DEBUG: Log important outgoing messages
     const importantTypes = ['VISUAL_EDIT_READY', 'ELEMENT_CLICKED', 'ELEMENT_HOVERED', 'ELEMENT_INFO', 'VISUAL_EDIT_ERROR'];
     if (importantTypes.includes(type)) {
-      console.log('[Bridge] 📤 Sending:', type, '| to:', targetOrigin, '| path:', window.location.pathname);
+      console.log('[VISUAL-DEBUG] 📤 Sending:', type, '| to:', targetOrigin, '| path:', window.location.pathname);
     }
     
     try {
@@ -1419,7 +1419,7 @@
         ...data
       }, targetOrigin);
     } catch (error) {
-      console.error('[Bridge] ❌ Error sending message:', error);
+      console.error('[VISUAL-DEBUG] ❌ Error sending message:', error);
     }
   }
 
@@ -1446,7 +1446,8 @@
     
     // DEBUG: Log all click actions (clicks are critical)
     if (action === 'click') {
-      console.log('[Bridge] 🖱️ CLICK detection started at:', x, y, '| path:', window.location.pathname);
+      console.log('[VISUAL-DEBUG] 🖱️ CLICK detection started at:', x, y, '| path:', window.location.pathname);
+      console.log('[VISUAL-DEBUG] 🖱️ state.rafId before:', state.rafId);
     }
     
     // Strategy 1: RAF Throttling - Only process one detection per frame
@@ -1454,12 +1455,20 @@
       // Store latest pending detection to process after current frame
       state.pendingDetection = { x, y, action };
       if (action === 'click') {
-        console.log('[Bridge] ⏳ Click queued (RAF busy)');
+        console.log('[VISUAL-DEBUG] ⏳ Click queued (RAF busy) - rafId:', state.rafId);
       }
       return;
     }
     
+    if (action === 'click') {
+      console.log('[VISUAL-DEBUG] 🖱️ Click: Starting RAF callback');
+    }
+    
     state.rafId = requestAnimationFrame(() => {
+      if (action === 'click') {
+        console.log('[VISUAL-DEBUG] 🖱️ Click: RAF callback EXECUTING');
+      }
+      
       try {
         // Strategy 2: Time-based Throttling - Configurable minimum interval
         const now = Date.now();
@@ -1484,7 +1493,7 @@
         const adjusted = adjustCoordinatesForIframe(x, y);
         
         if (action === 'click') {
-          console.log('[Bridge] 🖱️ Click adjusted coords:', adjusted.x, adjusted.y);
+          console.log('[VISUAL-DEBUG] 🖱️ Click adjusted coords:', adjusted.x, adjusted.y);
         }
         
         // Detect element at point
@@ -1492,7 +1501,7 @@
 
         if (!element) {
           if (action === 'click') {
-            console.log('[Bridge] ❌ Click: No element found at point!');
+            console.log('[VISUAL-DEBUG] ❌ Click: No element found at point!');
           }
           // Strategy 3: Deduplication - Only send if different from last
           if (state.lastHoveredSelector !== null) {
@@ -1505,7 +1514,7 @@
         }
 
         if (action === 'click') {
-          console.log('[Bridge] 🖱️ Click: Element found:', element.tagName, element.className?.substring?.(0, 50));
+          console.log('[VISUAL-DEBUG] 🖱️ Click: Element found:', element.tagName, element.className?.substring?.(0, 50));
         }
 
         // Generate optimal selector (cached for performance)
@@ -1513,7 +1522,7 @@
 
         if (!selector) {
           if (action === 'click') {
-            console.log('[Bridge] ❌ Click: Could not generate selector!');
+            console.log('[VISUAL-DEBUG] ❌ Click: Could not generate selector!');
           }
           if (state.lastHoveredSelector !== null) {
             state.lastHoveredSelector = null;
@@ -1525,7 +1534,8 @@
         }
         
         if (action === 'click') {
-          console.log('[Bridge] 🖱️ Click: Selector generated:', selector);
+          console.log('[VISUAL-DEBUG] 🖱️ Click: Selector generated:', selector);
+          console.log('[VISUAL-DEBUG] 🖱️ Click: About to process click action');
         }
 
         if (action === 'hover') {
@@ -1555,7 +1565,7 @@
           }
         } else if (action === 'click') {
           // Clicks are always processed (user intent)
-          console.log('[Bridge] ✅ Click: Processing click for selector:', selector);
+          console.log('[VISUAL-DEBUG] ✅ Click: Processing click for selector:', selector);
           
           state.lastHoveredSelector = selector;
           showSelection(element);
@@ -1565,7 +1575,7 @@
           const componentId = element.getAttribute('data-lov-id') || element.getAttribute('data-component-id') || null;
           const componentAnalysis = analyzeComponentId(componentId);
           
-          console.log('[Bridge] ✅ Click: Sending ELEMENT_CLICKED with componentId:', componentId);
+          console.log('[VISUAL-DEBUG] ✅ Click: Sending ELEMENT_CLICKED with componentId:', componentId);
           
           sendMessage(MESSAGE_TYPES.ELEMENT_CLICKED, { 
             selector,
@@ -1575,7 +1585,7 @@
             sharedComponentWarning: componentAnalysis.warningMessage
           });
           
-          console.log('[Bridge] ✅ Click: ELEMENT_CLICKED sent successfully!');
+          console.log('[VISUAL-DEBUG] ✅ Click: ELEMENT_CLICKED sent successfully!');
         }
       } catch (error) {
         console.error('[Lovivo Visual Edit] Error detecting element:', error);
@@ -1926,32 +1936,32 @@
 
     // DEBUG: Log all Visual Edit messages received
     if (type && type.includes('VISUAL_EDIT')) {
-      console.log('[Bridge] 📨 Received:', type, '| origin:', event.origin, '| path:', window.location.pathname);
+      console.log('[VISUAL-DEBUG] 📨 Received:', type, '| origin:', event.origin, '| path:', window.location.pathname);
     }
 
     // SECURITY: Validate message origin
     if (!isValidMessageOrigin(event)) {
-      console.warn('[Bridge] ❌ REJECTED - Origin not allowed:', event.origin);
-      console.warn('[Bridge] Allowed origins:', state.config.allowedOrigins);
+      console.warn('[VISUAL-DEBUG] ❌ REJECTED - Origin not allowed:', event.origin);
+      console.warn('[VISUAL-DEBUG] Allowed origins:', state.config.allowedOrigins);
       return;
     }
 
     try {
       switch (type) {
         case MESSAGE_TYPES.ACTIVATE:
-          console.log('[Bridge] 🔄 ACTIVATE on path:', window.location.pathname, '| isActive:', state.isActive);
+          console.log('[VISUAL-DEBUG] 🔄 ACTIVATE on path:', window.location.pathname, '| isActive:', state.isActive);
           activateVisualEditMode();
           break;
 
         case MESSAGE_TYPES.DEACTIVATE:
-          console.log('[Bridge] 🔴 DEACTIVATE');
+          console.log('[VISUAL-DEBUG] 🔴 DEACTIVATE');
           deactivateVisualEditMode();
           break;
 
         case MESSAGE_TYPES.DETECT:
           // Solo log si debug está habilitado (para evitar spam)
           if (state.config.enableDebug) {
-            console.log('[Bridge] 🎯 DETECT at', data.x, data.y, '| action:', data.action);
+            console.log('[VISUAL-DEBUG] 🎯 DETECT at', data.x, data.y, '| action:', data.action);
           }
           handleDetectElement(data);
           break;
@@ -1967,7 +1977,7 @@
           break;
 
         case MESSAGE_TYPES.REQUEST_INFO:
-          console.log('[Bridge] 📋 REQUEST_INFO for selector:', data.selector);
+          console.log('[VISUAL-DEBUG] 📋 REQUEST_INFO for selector:', data.selector);
           handleRequestInfo(data);
           break;
 
