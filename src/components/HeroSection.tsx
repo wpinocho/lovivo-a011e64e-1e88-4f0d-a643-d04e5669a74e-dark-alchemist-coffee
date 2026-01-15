@@ -131,7 +131,10 @@ export const HeroSection = () => {
                 rotateX(${-mousePosition.y * 0.5}deg)
                 translateY(${scrollY * 0.2}px)
               `,
-              transition: 'transform 0.3s ease-out'
+              transition: 'transform 0.3s ease-out',
+              letterSpacing: '0px',
+              paddingTop: 'px',
+              paddingBottom: '400px',
             }}
           >
             <div className="relative">
