@@ -1405,6 +1405,12 @@
   function sendMessage(type, data = {}) {
     const targetOrigin = getTargetOrigin();
     
+    // DEBUG: Log important outgoing messages
+    const importantTypes = ['VISUAL_EDIT_READY', 'ELEMENT_CLICKED', 'ELEMENT_HOVERED', 'ELEMENT_INFO', 'VISUAL_EDIT_ERROR'];
+    if (importantTypes.includes(type)) {
+      console.log('[Bridge] 📤 Sending:', type, '| to:', targetOrigin, '| path:', window.location.pathname);
+    }
+    
     try {
       window.parent.postMessage({
         source: 'lovivo-visual-edit-bridge',
@@ -1412,12 +1418,8 @@
         timestamp: Date.now(),
         ...data
       }, targetOrigin);
-      
-      if (state.config.enableDebug) {
-        console.log('[Lovivo Visual Edit] Message sent:', { type, targetOrigin });
-      }
     } catch (error) {
-      console.error('[Lovivo Visual Edit] Error sending message:', error);
+      console.error('[Bridge] ❌ Error sending message:', error);
     }
   }
 
@@ -1894,22 +1896,35 @@
       return;
     }
 
+    // DEBUG: Log all Visual Edit messages received
+    if (type && type.includes('VISUAL_EDIT')) {
+      console.log('[Bridge] 📨 Received:', type, '| origin:', event.origin, '| path:', window.location.pathname);
+    }
+
     // SECURITY: Validate message origin
     if (!isValidMessageOrigin(event)) {
+      console.warn('[Bridge] ❌ REJECTED - Origin not allowed:', event.origin);
+      console.warn('[Bridge] Allowed origins:', state.config.allowedOrigins);
       return;
     }
 
     try {
       switch (type) {
         case MESSAGE_TYPES.ACTIVATE:
+          console.log('[Bridge] 🔄 ACTIVATE on path:', window.location.pathname, '| isActive:', state.isActive);
           activateVisualEditMode();
           break;
 
         case MESSAGE_TYPES.DEACTIVATE:
+          console.log('[Bridge] 🔴 DEACTIVATE');
           deactivateVisualEditMode();
           break;
 
         case MESSAGE_TYPES.DETECT:
+          // Solo log si debug está habilitado (para evitar spam)
+          if (state.config.enableDebug) {
+            console.log('[Bridge] 🎯 DETECT at', data.x, data.y, '| action:', data.action);
+          }
           handleDetectElement(data);
           break;
 
@@ -1924,6 +1939,7 @@
           break;
 
         case MESSAGE_TYPES.REQUEST_INFO:
+          console.log('[Bridge] 📋 REQUEST_INFO for selector:', data.selector);
           handleRequestInfo(data);
           break;
 
