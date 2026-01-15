@@ -60,11 +60,11 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className="w-full sm:w-96 p-0" aria-describedby="cart-description">
+      <SheetContent side="right" className="w-full sm:w-96 p-0 glass-card border-l border-white/10" aria-describedby="cart-description">
         <div className="flex flex-col h-full">
-          <SheetHeader className="p-6 border-b">
-            <SheetTitle className="flex items-center gap-2">
-              Shopping Cart
+          <SheetHeader className="p-6 border-b border-white/10">
+            <SheetTitle className="flex items-center gap-2 text-foreground font-playfair text-2xl">
+              Your Cart
               <Link to="/carrito" onClick={onClose} className="hover:opacity-70 transition-opacity">
                 <ExternalLink className="h-4 w-4" />
               </Link>
@@ -77,14 +77,14 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
           {state.items.length === 0 ? (
             <div className="flex-1 flex items-center justify-center p-6">
               <div className="text-center">
-                <h3 className="text-lg font-medium text-foreground mb-2">
+                <h3 className="text-lg font-playfair font-semibold text-foreground mb-2">
                   Your cart is empty
                 </h3>
-                <p className="text-muted-foreground mb-4">
-                  Add some products to start your purchase
+                <p className="text-muted-foreground mb-6">
+                  Add some premium blends to start your journey
                 </p>
-                <Button onClick={onClose} variant="outline">
-                  Continue Shopping
+                <Button onClick={onClose} className="shimmer glow-primary bg-primary text-primary-foreground rounded-full">
+                  Explore Products
                 </Button>
               </div>
             </div>
@@ -93,7 +93,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
               {/* Cart Items */}
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {state.items.map((item) => (
-                  <Card key={item.key}>
+                  <Card key={item.key} className="glass-card border-white/10">
                     <CardContent className="p-4">
                       <div className="flex items-start space-x-3">
                         <div className="w-16 h-16 bg-muted rounded-md overflow-hidden flex-shrink-0">
@@ -160,22 +160,30 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
               </div>
 
               {/* Order Summary */}
-              <div className="border-t p-6">
-                <div className="space-y-3">
-                  <div className="flex justify-between font-semibold text-lg">
-                    <span>Total</span>
-                    <span>${finalTotal.toFixed(2)}</span>
+              <div className="border-t border-white/10 p-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-foreground font-semibold">${finalTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline text-lg font-playfair">
+                    <span className="text-foreground font-bold">Total</span>
+                    <span className="text-foreground font-bold">${finalTotal.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <Button 
-                  className="w-full mt-4" 
+                  className="w-full mt-6 shimmer glow-primary bg-primary text-primary-foreground rounded-full py-6" 
                   size="lg" 
                   onClick={handleCreateCheckout} 
                   disabled={isCreatingOrder}
                 >
-                  {isCreatingOrder ? 'Processing...' : 'Checkout'}
+                  {isCreatingOrder ? 'Processing...' : 'Proceed to Checkout'}
                 </Button>
+                
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  Free shipping on orders over $50
+                </p>
               </div>
             </>
           )}

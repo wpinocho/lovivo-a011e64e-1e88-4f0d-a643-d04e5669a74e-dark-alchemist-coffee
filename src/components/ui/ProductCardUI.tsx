@@ -26,10 +26,10 @@ export const ProductCardUI = ({ product }: ProductCardUIProps) => {
   return (
     <HeadlessProductCard product={product}>
       {(logic) => (
-        <Card className="bg-white border border-gray-200">
-          <CardContent className="p-4">
+        <Card className="glass-card group hover:border-white/30 transition-all duration-300 overflow-hidden">
+          <CardContent className="p-0">
             <Link to={`/productos/${logic.product.slug}`} className="block">
-              <div className="aspect-square bg-gray-100 rounded-md mb-3 overflow-hidden relative group">
+              <div className="aspect-square bg-muted/30 rounded-t-2xl overflow-hidden relative">
                 {(logic.matchingVariant?.image || (logic.product.images && logic.product.images.length > 0)) ? (
                   <>
                     {/* Primary image - only fade on hover if there's a second image */}
@@ -52,119 +52,122 @@ export const ProductCardUI = ({ product }: ProductCardUIProps) => {
                     )}
                   </>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    Sin imagen
+                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                    No image
                   </div>
                 )}
 
                 {/* Badges */}
-                <div className="absolute top-2 left-2 flex flex-col gap-1">
+                <div className="absolute top-4 left-4 flex flex-col gap-2">
                   {logic.discountPercentage && (
-                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded font-medium">
+                    <span className="glass-card text-primary text-xs px-3 py-1.5 rounded-full font-semibold glow-primary">
                       -{logic.discountPercentage}%
                     </span>
                   )}
                   {logic.product.featured && (
-                    <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded font-medium">
-                      Destacado
+                    <span className="glass-card text-accent text-xs px-3 py-1.5 rounded-full font-semibold">
+                      Featured
                     </span>
                   )}
                   {!logic.inStock && (
-                    <span className="bg-gray-600 text-white text-xs px-2 py-1 rounded font-medium">
-                      Agotado
+                    <span className="glass-card text-muted-foreground text-xs px-3 py-1.5 rounded-full font-semibold">
+                      Sold Out
                     </span>
                   )}
                 </div>
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              <h3 className="text-black font-medium text-sm mb-1 line-clamp-2">
-                {logic.product.title}
-              </h3>
-              {logic.product.description && (
-                <p className="text-gray-600 text-xs mb-3 line-clamp-2">
-                  {logic.product.description.replace(/<[^>]*>/g, '')}
-                </p>
-              )}
+              <div className="p-6">
+                <h3 className="text-foreground font-playfair font-semibold text-xl mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                  {logic.product.title}
+                </h3>
+                {logic.product.description && (
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {logic.product.description.replace(/<[^>]*>/g, '')}
+                  </p>
+                )}
+              </div>
             </Link>
 
-            {logic.hasVariants && logic.options && (
-              <div className="mb-3 space-y-2">
-                {logic.options.map((opt) => (
-                  <div key={opt.id}>
-                    <div className="text-xs font-medium text-black mb-1">{opt.name}</div>
-                    <div className="flex flex-wrap gap-2">
-                      {opt.values.filter(val => logic.isOptionValueAvailable(opt.name, val)).map((val) => {
-                        const isSelected = logic.selected[opt.name] === val
-                        const swatch = opt.name.toLowerCase() === 'color' ? opt.swatches?.[val] : undefined
+            <div className="px-6 pb-6 space-y-4">
+              {logic.hasVariants && logic.options && (
+                <div className="space-y-3">
+                  {logic.options.map((opt) => (
+                    <div key={opt.id}>
+                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">{opt.name}</div>
+                      <div className="flex flex-wrap gap-2">
+                        {opt.values.filter(val => logic.isOptionValueAvailable(opt.name, val)).map((val) => {
+                          const isSelected = logic.selected[opt.name] === val
+                          const swatch = opt.name.toLowerCase() === 'color' ? opt.swatches?.[val] : undefined
 
-                        if (swatch) {
+                          if (swatch) {
+                            return (
+                              <button
+                                key={val}
+                                type="button"
+                                onClick={() => logic.handleOptionChange(opt.name, val)}
+                                title={`${opt.name}: ${val}`}
+                                className={`h-8 w-8 rounded-full border-2 transition-all ${
+                                  isSelected ? 'border-primary glow-primary scale-110' : 'border-white/20'
+                                } ${logic.selected[opt.name] && !isSelected ? 'opacity-40' : ''}`}
+                                style={{ backgroundColor: swatch }}
+                                aria-label={`${opt.name}: ${val}`}
+                              />
+                            )
+                          }
+
                           return (
                             <button
                               key={val}
                               type="button"
                               onClick={() => logic.handleOptionChange(opt.name, val)}
-                              title={`${opt.name}: ${val}`}
-                              className={`h-6 w-6 rounded-full border ${
-                                logic.selected[opt.name] && !isSelected ? 'opacity-40' : ''
+                              className={`border rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+                                isSelected 
+                                  ? 'border-primary bg-primary text-primary-foreground glow-primary' 
+                                  : logic.selected[opt.name] && !isSelected
+                                    ? 'border-white/10 bg-transparent text-muted-foreground opacity-40'
+                                    : 'border-white/10 bg-transparent text-foreground hover:border-white/30'
                               }`}
-                              style={{ 
-                                backgroundColor: swatch, 
-                                borderColor: '#e5e7eb'
-                              }}
+                              aria-pressed={isSelected}
                               aria-label={`${opt.name}: ${val}`}
-                            />
+                              title={`${opt.name}: ${val}`}
+                            >
+                              {val}
+                            </button>
                           )
-                        }
-
-                        return (
-                          <button
-                            key={val}
-                            type="button"
-                            onClick={() => logic.handleOptionChange(opt.name, val)}
-                            className={`border rounded px-2 py-1 text-xs font-medium ${
-                              isSelected 
-                                ? 'border-black bg-black text-white' 
-                                : logic.selected[opt.name] && !isSelected
-                                  ? 'border-gray-300 bg-white text-gray-700 opacity-40'
-                                  : 'border-gray-300 bg-white text-gray-700'
-                            }`}
-                            aria-pressed={isSelected}
-                            aria-label={`${opt.name}: ${val}`}
-                            title={`${opt.name}: ${val}`}
-                          >
-                            {val}
-                          </button>
-                        )
-                      })}
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
 
-            <div className="flex items-center justify-between">
-              <div className="flex flex-col">
-                <span className="text-black font-semibold">
-                  {logic.formatMoney(logic.currentPrice)}
-                </span>
-                {logic.currentCompareAt && logic.currentCompareAt > logic.currentPrice && (
-                  <span className="text-gray-400 text-xs line-through">
-                    {logic.formatMoney(logic.currentCompareAt)}
+              <div className="flex items-end justify-between pt-2 border-t border-white/10">
+                <div className="flex flex-col gap-1">
+                  <span className="text-foreground font-bold text-2xl font-playfair">
+                    {logic.formatMoney(logic.currentPrice)}
                   </span>
-                )}
+                  {logic.currentCompareAt && logic.currentCompareAt > logic.currentPrice && (
+                    <span className="text-muted-foreground text-sm line-through">
+                      {logic.formatMoney(logic.currentCompareAt)}
+                    </span>
+                  )}
+                </div>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    logic.onAddToCartSuccess()
+                    logic.handleAddToCart()
+                  }}
+                  disabled={!logic.canAddToCart}
+                  className="shimmer glow-primary bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 rounded-full px-6"
+                >
+                  {logic.inStock ? 'Add to Cart' : 'Sold Out'}
+                </Button>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  logic.onAddToCartSuccess() // Hook para features adicionales
-                  logic.handleAddToCart()
-                }}
-                disabled={!logic.canAddToCart}
-                className="text-black border-black hover:bg-black hover:text-white disabled:opacity-50"
-              >
-                {logic.inStock ? 'Agregar' : 'Agotado'}
-              </Button>
             </div>
           </CardContent>
         </Card>

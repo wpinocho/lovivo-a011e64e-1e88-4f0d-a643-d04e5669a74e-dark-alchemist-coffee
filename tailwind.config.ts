@@ -35,6 +35,10 @@ export default {
 				'space-grotesk': ['"Space Grotesk"', 'sans-serif'],
 				'work-sans': ['"Work Sans"', 'sans-serif'],
 			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'gradient-mesh': 'radial-gradient(at 20% 30%, hsla(38, 92%, 50%, 0.15) 0px, transparent 50%), radial-gradient(at 80% 70%, hsla(158, 64%, 16%, 0.12) 0px, transparent 50%), radial-gradient(at 50% 50%, hsla(270, 50%, 40%, 0.08) 0px, transparent 50%)',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
