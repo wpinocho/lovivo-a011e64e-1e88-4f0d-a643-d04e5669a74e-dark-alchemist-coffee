@@ -1966,13 +1966,12 @@
       return;
     }
     
-    // CAPTURE parent origin from valid incoming messages
-    // This is the MOST RELIABLE way to know where to send responses
-    captureAndLockParentOrigin(event.origin);
-
     try {
       switch (type) {
         case MESSAGE_TYPES.ACTIVATE:
+          // CAPTURE parent origin ONLY from ACTIVATE message
+          // This is the ONLY message that comes exclusively from the parent editor
+          captureAndLockParentOrigin(event.origin);
           console.log('[VISUAL-DEBUG] 🔄 ACTIVATE on path:', window.location.pathname, '| isActive:', state.isActive);
           activateVisualEditMode();
           break;
