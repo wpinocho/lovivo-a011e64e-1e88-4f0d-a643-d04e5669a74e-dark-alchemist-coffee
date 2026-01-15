@@ -71,7 +71,7 @@ export const HeroSection = () => {
             </div>
 
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-playfair font-bold leading-tight">
-              <span style={{ fontWeight: '100', letterSpacing: '0px', fontFamily: 'Arial, sans-serif' }} className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
                 Neural Fuel
               </span>
               <br />
