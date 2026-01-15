@@ -145,9 +145,9 @@ export const HeroSection = () => {
                 className="relative z-10 w-full h-auto drop-shadow-2xl"
               />
 
-              {/* Floating info cards */}
+              {/* Floating info cards - brought to front with higher z-index */}
               <div 
-                className="absolute top-1/4 -left-8 glass-card p-4 rounded-2xl glow-primary animate-float"
+                className="absolute top-1/4 -left-8 glass-card p-4 rounded-2xl glow-primary animate-float z-20"
                 style={{ animationDelay: '0s' }}
               >
                 <div className="text-sm font-semibold text-foreground">Lion's Mane</div>
@@ -155,7 +155,7 @@ export const HeroSection = () => {
               </div>
 
               <div 
-                className="absolute top-1/2 -right-8 glass-card p-4 rounded-2xl glow-accent animate-float"
+                className="absolute top-1/2 -right-8 glass-card p-4 rounded-2xl glow-accent animate-float z-20"
                 style={{ animationDelay: '1s' }}
               >
                 <div className="text-sm font-semibold text-foreground">Ashwagandha</div>
@@ -163,7 +163,7 @@ export const HeroSection = () => {
               </div>
 
               <div 
-                className="absolute bottom-1/4 left-1/4 glass-card p-4 rounded-2xl glow-secondary animate-float"
+                className="absolute bottom-1/4 left-1/4 glass-card p-4 rounded-2xl glow-secondary animate-float z-20"
                 style={{ animationDelay: '2s' }}
               >
                 <div className="text-sm font-semibold text-foreground">Chaga</div>
