@@ -1444,10 +1444,18 @@
   function handleDetectElement(data) {
     const { x, y, action } = data;
     
+    // DEBUG: Log all click actions (clicks are critical)
+    if (action === 'click') {
+      console.log('[Bridge] 🖱️ CLICK detection started at:', x, y, '| path:', window.location.pathname);
+    }
+    
     // Strategy 1: RAF Throttling - Only process one detection per frame
     if (state.rafId) {
       // Store latest pending detection to process after current frame
       state.pendingDetection = { x, y, action };
+      if (action === 'click') {
+        console.log('[Bridge] ⏳ Click queued (RAF busy)');
+      }
       return;
     }
     
@@ -1475,10 +1483,17 @@
         // Adjust coordinates for iframe
         const adjusted = adjustCoordinatesForIframe(x, y);
         
+        if (action === 'click') {
+          console.log('[Bridge] 🖱️ Click adjusted coords:', adjusted.x, adjusted.y);
+        }
+        
         // Detect element at point
         const element = detectElementAtPoint(adjusted.x, adjusted.y);
 
         if (!element) {
+          if (action === 'click') {
+            console.log('[Bridge] ❌ Click: No element found at point!');
+          }
           // Strategy 3: Deduplication - Only send if different from last
           if (state.lastHoveredSelector !== null) {
             state.lastHoveredSelector = null;
@@ -1489,10 +1504,17 @@
           return;
         }
 
+        if (action === 'click') {
+          console.log('[Bridge] 🖱️ Click: Element found:', element.tagName, element.className?.substring?.(0, 50));
+        }
+
         // Generate optimal selector (cached for performance)
         const selector = generateOptimalSelector(element);
 
         if (!selector) {
+          if (action === 'click') {
+            console.log('[Bridge] ❌ Click: Could not generate selector!');
+          }
           if (state.lastHoveredSelector !== null) {
             state.lastHoveredSelector = null;
             sendMessage(MESSAGE_TYPES.NO_ELEMENT, { action });
@@ -1500,6 +1522,10 @@
           }
           state.rafId = null;
           return;
+        }
+        
+        if (action === 'click') {
+          console.log('[Bridge] 🖱️ Click: Selector generated:', selector);
         }
 
         if (action === 'hover') {
@@ -1529,6 +1555,8 @@
           }
         } else if (action === 'click') {
           // Clicks are always processed (user intent)
+          console.log('[Bridge] ✅ Click: Processing click for selector:', selector);
+          
           state.lastHoveredSelector = selector;
           showSelection(element);
           
@@ -1536,6 +1564,8 @@
           // lovable-tagger uses 'data-lov-id', fallback to 'data-component-id' for compatibility
           const componentId = element.getAttribute('data-lov-id') || element.getAttribute('data-component-id') || null;
           const componentAnalysis = analyzeComponentId(componentId);
+          
+          console.log('[Bridge] ✅ Click: Sending ELEMENT_CLICKED with componentId:', componentId);
           
           sendMessage(MESSAGE_TYPES.ELEMENT_CLICKED, { 
             selector,
@@ -1545,9 +1575,7 @@
             sharedComponentWarning: componentAnalysis.warningMessage
           });
           
-          if (state.config.enableDebug) {
-            console.log('[Lovivo Visual Edit] 🖱️ Click:', selector);
-          }
+          console.log('[Bridge] ✅ Click: ELEMENT_CLICKED sent successfully!');
         }
       } catch (error) {
         console.error('[Lovivo Visual Edit] Error detecting element:', error);
