@@ -88,6 +88,72 @@
     scrollHandlerId: null
   };
 
+  // ===== SPA NAVIGATION DETECTION =====
+  // Detect route changes in React/Vue/Angular SPAs without page reload
+  
+  let currentPath = window.location.pathname;
+
+  // Patch History API to detect route changes
+  const originalPushState = window.history.pushState;
+  window.history.pushState = function(...args) {
+    originalPushState.apply(this, args);
+    handleRouteChange();
+  };
+
+  const originalReplaceState = window.history.replaceState;
+  window.history.replaceState = function(...args) {
+    originalReplaceState.apply(this, args);
+    handleRouteChange();
+  };
+
+  // Back/Forward navigation
+  window.addEventListener('popstate', handleRouteChange);
+
+  function handleRouteChange() {
+    const newPath = window.location.pathname;
+    if (newPath !== currentPath) {
+      console.log('[Lovivo Visual Edit] 📍 Route changed:', currentPath, '->', newPath);
+      currentPath = newPath;
+      
+      // Clean up visual state (overlays, cache, selections)
+      cleanupVisualEditState();
+      
+      // Re-send READY if visual edit mode is active
+      if (state.isActive) {
+        sendMessage(MESSAGE_TYPES.READY, { 
+          version: '2.1.0',
+          features: ['spa-navigation', 'route-change'],
+          currentPath: newPath,
+          routeChanged: true
+        });
+      }
+    }
+  }
+
+  function cleanupVisualEditState() {
+    // Clear selector cache (elements no longer exist after route change)
+    state.selectorCache = new WeakMap();
+    
+    // Clear overlays
+    if (state.overlays.hover) {
+      state.overlays.hover.style.display = 'none';
+    }
+    if (state.overlays.selected) {
+      state.overlays.selected.style.display = 'none';
+    }
+    if (state.overlays.tooltip) {
+      state.overlays.tooltip.style.display = 'none';
+    }
+    
+    // Reset tracking state
+    state.lastHoveredSelector = null;
+    state.currentHighlightedElement = null;
+    state.currentSelectedElement = null;
+    
+    // Clear any pending previews
+    state.previewElements.clear();
+  }
+
   // ===== PHASE 2: SELECTOR GENERATION - WORLD CLASS =====
 
   /**
@@ -1555,10 +1621,21 @@
 
   /**
    * Activate Visual Edit Mode
+   * Always responds with READY including current path for SPA navigation support
    */
   function activateVisualEditMode() {
+    // Clean up any stale state before activation
+    cleanupVisualEditState();
+    
     if (state.eventListenersAttached) {
-      console.log('[Lovivo Visual Edit] Already active');
+      console.log('[Lovivo Visual Edit] Re-activating on path:', window.location.pathname);
+      // IMPORTANTE: Siempre enviar READY cuando se activa, incluso si ya estaba activo
+      sendMessage(MESSAGE_TYPES.READY, { 
+        version: '2.1.0',
+        active: true,
+        currentPath: window.location.pathname,
+        reactivated: true
+      });
       return;
     }
 
@@ -1592,8 +1669,12 @@
 
     state.eventListenersAttached = true;
     
-    console.log('🎨 Lovivo Visual Edit Mode ACTIVATED');
-    sendMessage(MESSAGE_TYPES.READY, { active: true });
+    console.log('🎨 Lovivo Visual Edit Mode ACTIVATED on path:', window.location.pathname);
+    sendMessage(MESSAGE_TYPES.READY, { 
+      version: '2.1.0',
+      active: true,
+      currentPath: window.location.pathname
+    });
   }
 
   /**
@@ -1882,9 +1963,9 @@
 
   // ===== INITIALIZATION =====
 
-  // Send ready message to parent
+  // Send ready message to parent with current path for SPA support
   sendMessage(MESSAGE_TYPES.READY, { 
-    version: '2.0.0',
+    version: '2.1.0',
     features: [
       'optimal-selectors',
       'tailwind-filtering',
@@ -1892,11 +1973,13 @@
       'precise-detection',
       'professional-overlays',
       'performance-optimized',
-      'origin-validation'
-    ]
+      'origin-validation',
+      'spa-navigation'
+    ],
+    currentPath: window.location.pathname
   });
 
-  console.log('✅ Lovivo Visual Edit Bridge initialized and ready');
+  console.log('✅ Lovivo Visual Edit Bridge v2.1.0 initialized on path:', window.location.pathname);
   
   // Auto-detect parent origin on initialization
   if (state.config.autoDetectParent && !state.config.parentOrigin) {
@@ -1913,7 +1996,8 @@
       configure,
       setAllowedOrigins,
       getConfig: () => ({ ...state.config }), // Read-only config
-      version: '2.0.0'
+      getCurrentPath: () => currentPath, // Current tracked path
+      version: '2.1.0'
     };
   }
 
