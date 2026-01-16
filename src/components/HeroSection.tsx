@@ -71,13 +71,13 @@ export const HeroSection = () => {
             </div>
 
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-playfair font-bold leading-tight">
-              <span className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
+              <span style={{ fontSize: '60px' }} className="bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
                 Combustible
               </span>
               <br />
-              <span className="text-foreground">Neural para el</span>
+              <span style={{ fontSize: '60px' }} className="text-foreground">Neural para el</span>
               <br />
-              <span className="bg-gradient-to-r from-accent via-secondary to-primary bg-clip-text text-transparent">
+              <span style={{ fontSize: '60px', letterSpacing: '0px' }} className="bg-gradient-to-r from-accent via-secondary to-primary bg-clip-text text-transparent">
                 Alquimista Moderno
               </span>
             </h1>
