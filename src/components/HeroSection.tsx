@@ -56,7 +56,7 @@ export const HeroSection = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div style={{ letterSpacing: '0px', paddingTop: '-16px', paddingBottom: '35px', marginTop: '-138px' }} className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text content */}
           <div 
             className="space-y-8 z-10"
